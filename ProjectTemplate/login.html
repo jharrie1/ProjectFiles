@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Log In</title>
     <link rel="stylesheet" type="text/css" href="login.css">
+    <script src="login.js"></script>
 </head>
 
 <body>
@@ -21,17 +22,17 @@
                 <label id="login" for="login">Login</label>
                 <br>
                 <br>
-                <label id="username" for="username">Username: </label>
+                <label id="usernameLabel" for="username">Username: </label>
                 <br>
-                <input type="text" name="username">
-                <br>
-                <br>
-                <label id="password" for="password">Password: </label>
-                <br>
-                <input type="password" name="password">
+                <input id="username" type="text" name="username">
                 <br>
                 <br>
-                <input  class="button" type="submit" value="Submit">
+                <label id="passwordLabel" for="password">Password: </label>
+                <br>
+                <input id="password" type="password" name="password">
+                <br>
+                <br>
+                <input onclick="recieved()" class="button" type="submit" value="Submit">
                 <br>
                 <br>
                 <input class="button" type="button" value="Create an Account">
