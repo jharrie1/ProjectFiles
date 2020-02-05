@@ -1,0 +1,92 @@
+@media only screen and (max-width: 1000px) {
+    .invisible {display: none;}
+    .fullRow {width: 100%}
+
+    td {font-size:1.7em;}
+    /*Invisible class will likely be used later to hide items in the main menu.*/
+}
+
+@media only screen and  (min-width: 1001px) {
+    .halfRow {width: 50%;}
+
+    td {font-size:1.8em;}
+    
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+table {
+    color:rgba(0, 0, 0, 0.411); 
+    margin-left:auto; 
+    margin-right:auto;
+}
+
+.full{
+    width: 100%
+}
+
+.title{
+    padding-top: .5em; 
+    text-align: center; 
+    padding-bottom: 0.3em; 
+    width: 100%; 
+}
+
+.mission{
+    background-color: rgb(228, 198, 159);
+}
+
+.vision{
+    background-color: burlywood;
+}
+
+.features {
+    background-color: bisque;
+    padding-bottom: 22em;
+}
+
+.subtitle {
+    margin-top: 0; 
+    margin-bottom: 0.4em; 
+    text-align: center; 
+    font-weight: bold; 
+    color:white; 
+    font-size:6em;
+}
+
+.unchangingText {
+   text-align: center; 
+   font-size: 1.8em; 
+   color:rgba(0, 0, 0, 0.411);
+}
+
+.volunteers {
+    float: left; 
+    text-align: center; 
+    padding-top: .5em; 
+    padding-bottom: 1em; 
+    background-color: bisque;
+}
+
+.providers {
+    float: right; 
+    padding-top: .5em; 
+    padding-bottom: 0.3em; 
+    background-color: bisque;
+}
+
+.minorTitle {
+    margin-top: 0; 
+    margin-bottom: 0.4em; 
+    text-align: center; 
+    font-weight: bold; 
+    color:white; 
+    font-size:3em;
+}
+
