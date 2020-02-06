@@ -7,7 +7,7 @@ function recieved() {
     cpassword = document.getElementById("confirmpassword").value;
 
     if (password != cpassword) {
-       alert("Password is inconsistent. Please verify password and password confirmation.")
+       alert("Password is inconsistent. Please try again.")
        return;
     }
 }
@@ -15,4 +15,6 @@ function recieved() {
 //Questions:
 
     //1. Is there a way to prevent the form from automatically refershing the page?
-    //2. Is email validation automatic, or do I have to program something in javascript?
+    //2. Why does the submit button for the login page not work, but the method does?
+    //3. Why cant the server find my accountCreation.js file?
+    //
