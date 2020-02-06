@@ -1,0 +1,68 @@
+@media only screen and (max-width: 800px)
+{
+    #title {
+        font-size: 2em;
+    }
+
+    label {
+        font-size: 1.2em;
+    }  
+}
+
+@media only screen and (min-width: 801px)
+{
+    #title {
+        font-size: 3.5em;
+    }
+
+    label {
+        font-size: 2.5em;
+    }
+
+    .button {
+        font-size: 2em;
+        width: 6em;
+    }
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+form {
+    width: 40%; 
+    margin-left: auto;
+    margin-right: auto; 
+    text-align: center;
+    background-color: bisque;
+}
+
+fieldset {
+    padding-bottom: 2em;
+}
+
+.main {
+    width: 100%;
+    background-color: beige;
+}
+
+.color1 {
+    width:100%;
+    background-color: rgb(253, 230, 196);
+    padding: 3em;
+}
+
+.color2 {
+    width:100%;
+    background-color: rgb(253, 230, 196);
+    padding: 12em;
+}
+
+#title {
+    border-bottom: 2px solid black;
+}

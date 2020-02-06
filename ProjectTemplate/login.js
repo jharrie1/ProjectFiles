@@ -2,13 +2,13 @@ function recieved() {
     username = document.getElementById("username").value;
     password = document.getElementById("password").value;
     //Potentially have a ToString() method here to guarentee that these are strings. 
-    alert(username);
+    //alert(username);
 
     var webMethod = "ProjectServices.asmx/LogOn";
     var parameters = "{\"username\":\"" + encodeURI(username) + "\", \"password\":\"" + encodeURI(password) + "\"}";
 
 
-    /*$.ajax({
+    $.ajax({
         type: "POST",
         url: webMethod,
         data: parameters,
@@ -21,5 +21,5 @@ function recieved() {
         error: function (e) {
             alert("this code will only execute if javascript is unable to access the webservice");
         }
-    });*/
+    });
 };
