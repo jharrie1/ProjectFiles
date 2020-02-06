@@ -1,10 +1,9 @@
-//May need to include json script here, not sure. 
+
 
     function TestButtonHandler() {
         var webMethod = "ProjectServices.asmx/TestConnection";
         var parameters = "{}";
 
-        //jQuery ajax method
         $.ajax({
             type: "POST",
             url: webMethod,

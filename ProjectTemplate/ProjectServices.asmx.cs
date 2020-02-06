@@ -34,33 +34,39 @@ namespace ProjectTemplate
 
 
 
-		/////////////////////////////////////////////////////////////////////////
-		//don't forget to include this decoration above each method that you want
-		//to be exposed as a web service!
-		[WebMethod(EnableSession = true)]
-		/////////////////////////////////////////////////////////////////////////
-		public string TestConnection()
-		{
-			try
-			{
-				string testQuery = "select * from test_table";
+        //LogIn Function (Based on the LogOn Function for accountmanager code file.
+        //Comments will show changes made to get the function working
+        [WebMethod]
+        public bool LogOn(string username, string password)
+        {
+            //Parameter names were changed.
 
-				////////////////////////////////////////////////////////////////////////
-				///here's an example of using the getConString method!
-				////////////////////////////////////////////////////////////////////////
-				MySqlConnection con = new MySqlConnection(getConString());
-				////////////////////////////////////////////////////////////////////////
+            bool success = false;
 
-				MySqlCommand cmd = new MySqlCommand(testQuery, con);
-				MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-				DataTable table = new DataTable();
-				adapter.Fill(table);
-				return "Success!";
-			}
-			catch (Exception e)
-			{
-				return "Something went wrong, please check your credentials and db name and try again.  Error: "+e.Message;
-			}
-		}
-	}
+            //string changed to match the current database tables.
+            string sqlSelect = "SELECT id FROM users WHERE username=@idValue and password=@passValue";
+
+            //Using the getConString() method to get access to the database (had diff. method before, which was deleted.
+            MySqlConnection con = new MySqlConnection(getConString());
+            
+            //Changed name of connection object argument to meet the new name (con)
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, con);
+
+            sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(username));
+            sqlCommand.Parameters.AddWithValue("@passValue", HttpUtility.UrlDecode(password));
+
+            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+            
+            DataTable sqlDt = new DataTable();
+            
+            sqlDa.Fill(sqlDt);
+            
+            if (sqlDt.Rows.Count > 0)
+            {
+                success = true;
+            }
+           
+            return success;
+        }
+    }
 }
