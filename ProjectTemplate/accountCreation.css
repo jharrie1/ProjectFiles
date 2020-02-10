@@ -25,6 +25,25 @@
     }
 }
 
+header {
+    width: 100%;
+    padding-bottom: 1em;
+}
+
+header a {
+    display: inline-block;
+    padding-top: 1em;
+}
+
+.right {
+    float: right;
+    margin-left: 2em;
+    margin-right: 1em;
+}
+
+#home {
+    margin-left: 2em;
+}
 
 * {
     box-sizing: border-box;

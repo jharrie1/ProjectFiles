@@ -53,9 +53,26 @@ fieldset {
     background-color: beige;
 }
 
-.title {
+header {
     width: 100%;
+    padding-bottom: 1em;
 }
+
+header a {
+    display: inline-block;
+    padding-top: 1em;
+}
+
+.right {
+    float: right;
+    margin-left: 2em;
+    margin-right: 1em;
+}
+
+#home {
+    margin-left: 2em;
+}
+
 .color1 {
     width:100%;
     background-color: rgb(253, 230, 196);
