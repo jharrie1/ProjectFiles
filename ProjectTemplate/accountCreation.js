@@ -13,7 +13,7 @@ function recieved() {
 
     var webMethod = "ProjectServices.asmx/RequestAccount";
     var parameters = "{\"username\":\"" + encodeURI(username) + "\", \"password\":\"" + encodeURI(password) +
-        "\", \"firstname\":\"" + encodeURI(fname) + "\", \"lastname\":\"" + encodeURI(lname) + "\", \"email\":\"" + encodeURI(email) +"\"}";
+        "\", \"firstName\":\"" + encodeURI(fname) + "\", \"lastName\":\"" + encodeURI(lname) + "\", \"email\":\"" + encodeURI(email) +"\"}";
 
     $.ajax({
         type: "POST",
@@ -35,6 +35,5 @@ function recieved() {
 
     //1. Is there a way to prevent the form from automatically refershing the page?
     //2. Why does the submit button for the login page not work, but the method does?
-    //3. Why cant the server find my accountCreation.js file?
-    //4. Why doesn't this code connect to the backend code?
+    //3. Why doesn't this code connect to the backend code?
     //

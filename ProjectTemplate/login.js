@@ -16,7 +16,16 @@ function recieved() {
         dataType: "json",
         success: function (msg) {
             var responseFromServer = msg.d;
-            alert(responseFromServer);
+
+            if (responseFromServer == true) {
+                document.getElementById("username").value = "";
+                document.getElementById("password").value = "";
+                window.open("index.html", "_self")
+            }
+
+            else {
+                alert("Incorrect username or password. Please try again.");
+            }
         },
         error: function (e) {
             alert("this code will only execute if javascript is unable to access the webservice");

@@ -29,7 +29,7 @@ namespace ProjectTemplate
 
         //LogIn Function (Based on the LogOn Function for accountmanager code file.
         //Comments will show changes made to get the function working
-        [WebMethod]
+        [WebMethod(EnableSession =true)]
         public bool LogOn(string username, string password)
         {
             //Parameter names were changed.
@@ -57,10 +57,12 @@ namespace ProjectTemplate
             if (sqlDt.Rows.Count > 0)
             {
                 success = true;
+                Session["id"] = sqlDt.Rows[0]["id"];
+                Session["status"] = sqlDt.Rows[0]["status"];
             }
            
             return success;
-        }
+        } 
 
         //RequestAccount Function (based on RequestAccount function and the GetAccounts() function for data validation)
         [WebMethod]
