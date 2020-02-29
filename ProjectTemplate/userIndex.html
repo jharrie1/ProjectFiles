@@ -3,16 +3,22 @@
 <head>
     <meta charset="utf-8" />
     <title>Home</title>
-    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="userIndex.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="logOff.js"></script>
 </head>
 
 
 <body>
     <header>
-        <a id="home" href="index.html">Home</a>
-        <a class="right" href="login.html">Log In</a>
+        <a id="home" href="userIndex.html">Home</a>
+        <a class="right" href="#" onclick="logoff()">Log Off</a>
+        <!--Learned about hashtag href from professor office hours. -->
+        <a class="right" href="#" onclick="deleteAccount()">Delete Account</a>
         <a class="right" href="About.html">About</a>
-        <a class="right" href="accountCreation.html">Create an Account</a>
+        <a class="right" href="taskCreation.html">Create Task</a>
+        <a class="right" href="taskSearch.html">Search Task</a>
+        <a class="right" href="taskManagement.html">Current Tasks</a>
     </header>
 
     <div class="color"></div>
@@ -44,7 +50,3 @@
 
 </body>
 </html>
-
-<!--Quetsions:
-    1. Is there a way I can make the button be an anchor element instead? 
-    -->

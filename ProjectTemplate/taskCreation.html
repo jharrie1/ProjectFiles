@@ -4,63 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Create an account</title>
-    <link rel="stylesheet" type="text/css" href="accountCreation.css">
+    <title>Task Creation</title>
+    <link rel="stylesheet" type="text/css" href="taskCreation.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="accountCreation.js"></script>
+    <script src="taskCreation.js"></script>
+    <script src="logOff.js"></script>
 </head>
 
-<body>
-    <header>
+<body onload="home()">
+    <header id="headerBar">
         <a id="home" href="index.html">Home</a>
-        <a class="right" href="login.html">Log In</a>
-        <a class="right" href="About.html">About</a>
-        <a class="right" href="accountCreation.html">Create an Account</a>
     </header>
 
     <div class="color1"></div>
 
     <div class="main">
-        <form>
+        <form> 
             <fieldset>
-                <label id="title" for="title">Account Details</label>
+                <label id="title" for="title">Task Details</label>
                 <br>
                 <br>
                 <br>
                 <br>
-                <label for="firstname">First Name</label>
+                <label for="tasktitle">Title</label>
                 <br>
-                <input id="firstname" type="text" name="firstname">
-                <br>
-                <br>
-                <br>
-                <label for="lastname">Last Name</label>
-                <br>
-                <input id="lastname" type="text" name="lastname">
+                <input id="tasktitle" type="text" name="tasktitle">
                 <br>
                 <br>
                 <br>
-                <label for="email">Email</label>
+                <label for="description">Description</label> 
                 <br>
-                <input id="email" type="email" name="email">
-                <br>
-                <br>
-                <br>
-                <label for="username">Username</label>
-                <br>
-                <input id="username" type="text" name="username">
+                <input id="description" type="text" name="description"> 
                 <br>
                 <br>
                 <br>
-                <label for="password">Password</label>
+                <label for="date">Start Date</label>
                 <br>
-                <input id="password" type="password" name="password">
+                <input id="date" type="date" name="date">
                 <br>
                 <br>
                 <br>
-                <label for="confirmpassword">Confirm Password</label>
+                <label for="time">Start Time</label>
                 <br>
-                <input id="confirmpassword" type="password" name="confirmpassword">
+                <input id="time" type="time" name="time">
+                <br>
+                <br>
+                <br>
+                <label for="hours">Total Hours</label>
+                <br>
+                <input id="hours" type="input" name="hours">
+                <br>
+                <br>
+                <br>
+                <label for="areaLocation">Location</label>
+                <br>
+                <input id="areaLocation" type="input" name="areaLocation">
                 <br>
                 <br>
                 <br>

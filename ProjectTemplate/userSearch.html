@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Manage Users</title>
+    <link rel="stylesheet" type="text/css" href="userSearch.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="userSearch.js"></script>
+    <script src="logOff.js"></script>
+</head>
+
+<body onload="home()">
+    <header>
+        <a id="home" href="adminIndex.html">Home</a>
+        <a class="right" href="#" onclick="logoff()">Log Off</a>
+        <!--Learned about hashtag href from professor office hours. -->
+        <a class="right" href="#" onclick="deleteAccount()">Delete this Account</a>
+        <a class="right" href="About.html">About</a>
+        <a class="right" href="taskCreation.html">Create Task</a>
+        <a class="right" href="taskSearch.html">Search Task</a>
+        <a href="taskManagement.html" class="right">Current Tasks</a>
+        <a class="right" href="userSearch.html">Find User</a>
+        <a href="userManagement.html" class="right">New Users</a>
+    </header>
+
+    <div class="color1">
+        <form id="searchForm">
+            <input id="searchBar" class="center" type="search" name="search"/>
+            <button class="center" type="button" onclick="recieved()"> Search</button>
+        </form>
+    </div>
+
+    <div class="main">
+        <p class="center">Results</p>
+        <form id="form1"></form>
+    </div>
+
+    <div class="color2">
+        <table id="table">
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+
+            </tr>
+            <tr>
+                <td id="idrow"></td>
+                <td id="usernamerow"></td>
+                <td id="firstnamerow"></td>
+                <td id="lastnamerow"></td>
+                <td id="emailrow"></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

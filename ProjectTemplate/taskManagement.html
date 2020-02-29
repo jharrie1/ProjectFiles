@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Manage Tasks</title>
+    <link rel="stylesheet" type="text/css" href="taskManagement.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="taskManagement.js"></script>
+    <script src="logOff.js"></script>
+</head>
+
+<body onload="home()">
+    <header id="headerBar">
+        <a id="home" href="adminIndex.html">Home</a>
+    </header>
+
+    <div class="color1"></div>
+
+    <div class="main">
+        <p>Currently Registered Tasks</p>
+        <button id="refreshButton" onclick="recieved()" type="button">Refresh</button>
+        <form id="form1"></form>
+    </div>
+
+    <!--Change this later when putting in the task display function.-->
+    <div class="color2">
+        <table id="table">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>Hours</th>
+                <th>Location</th>
+
+            </tr>
+            <tr>
+                <td id="idrow"></td>
+                <td id="titlerow"></td>
+                <td id="descriptionrow"></td>
+                <td id="daterow"></td>
+                <td id="timerow"></td>
+                <td id="hoursrow"></td>
+                <td id="locationrow"></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

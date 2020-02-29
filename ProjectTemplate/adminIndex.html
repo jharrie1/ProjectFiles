@@ -3,16 +3,25 @@
 <head>
     <meta charset="utf-8" />
     <title>Home</title>
-    <link rel="stylesheet" type="text/css" href="index.css">
+    <!--JQuery Tag to read ajax method in index.js file.-->
+    <link rel="stylesheet" type="text/css" href="adminIndex.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="logOff.js"></script>
 </head>
 
 
 <body>
     <header>
-        <a id="home" href="index.html">Home</a>
-        <a class="right" href="login.html">Log In</a>
+        <a id="home" href="adminIndex.html">Home</a>
+        <a class="right" href="#" onclick="logoff()">Log Off</a>
+        <!--Learned about hashtag href from professor office hours. -->
+        <a class="right" href="#" onclick="deleteAccount()">Delete this Account</a>
         <a class="right" href="About.html">About</a>
-        <a class="right" href="accountCreation.html">Create an Account</a>
+        <a class="right" href="taskCreation.html">Create Task</a>
+        <a class="right" href="taskSearch.html">Search Task</a>
+        <a href="taskManagement.html" class="right">Current Tasks</a>
+        <a class="right" href="userSearch.html">Find User</a>
+        <a href="userManagement.html" class="right">New Users</a>
     </header>
 
     <div class="color"></div>
@@ -45,6 +54,6 @@
 </body>
 </html>
 
-<!--Quetsions:
-    1. Is there a way I can make the button be an anchor element instead? 
+<!--Question:
+    1. Can I use a link instead of a button? 
     -->

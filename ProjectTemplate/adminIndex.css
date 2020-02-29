@@ -1,0 +1,99 @@
+body {
+    margin: 0;
+}
+
+header {
+    width: 100%;
+    padding-bottom: 1em;
+}
+
+header a {
+    display: inline-block;
+    padding-top: 1em;
+}
+
+.right {
+    float: right;
+    margin-left: 2em;
+    margin-right: 1em;
+}
+
+#home {
+    margin-left: 2em;
+}
+
+
+.color {
+    width: 100%;
+    background-color: bisque;
+    padding-top: 2.5em;
+}
+
+.color2 {
+    width: 100%;
+    background-color: bisque;
+    padding-bottom: 4em;
+    float: left;
+}
+
+.color3 {
+    width: 100%;
+    background-color:  rgba(253, 230, 196, 0.548);
+    float: left;
+    text-align: center;
+
+}
+
+.color3 p {
+    color: rgba(173, 216, 230, 0.849);
+    font-size: 2em;
+    margin-top: 0em;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+}
+
+.title {
+    width: 50%;
+    float: left;
+    text-align: right;
+    background-color: rgba(253, 230, 196, 0.548);
+    padding-bottom: 2em; /*May have to put for both pictures as well*/
+}
+
+.picture {
+    width: 25%;
+    float: left;
+    text-align: center;
+    margin-top: 10em;
+    background-color: white;
+}
+
+#title {
+    font-weight: bold;
+    font-size: 9em;
+    color: rgba(173, 216, 230, 0.671);
+    text-align: center;
+    margin-bottom: 0.5em;
+    
+}
+
+#title-text {
+    font-weight: bold;
+    font-size: 2em;
+    color: rgba(173, 216, 230, 0.514);
+    text-align: center;
+}
+
+footer {
+    width: 100%;
+    float: left; 
+    background-color: white;
+    text-align: center;
+    background-color: rgba(253, 230, 196, 0.548);
+    padding-bottom: 2.5em;
+}
+
+footer img{
+    display: inline-block;
+    margin: 1em;
+}

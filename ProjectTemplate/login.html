@@ -10,19 +10,18 @@
     <script src="login.js"></script>
 </head>
 
-<body>
+<body onload="home()">
     <header>
         <a id="home" href="index.html">Home</a>
         <a class="right" href="login.html">Log In</a>
+        <a class="right" href="About.html">About</a>
         <a class="right" href="accountCreation.html">Create an Account</a>
-        <a class="right" href="About.html">About Us</a>
     </header>
 
     <div class="color1"></div>
 
     <div class="main">
         <form>
-            <!--Found property at: https://html.form.guide/snippets/html-submit-button-onclick-code.html-->
             <fieldset>
                 <label id="login" for="login">Login</label>
                 <br>
@@ -40,7 +39,8 @@
                 <input class="button" type="button" value="Submit" onclick="recieved()">
                 <br>
                 <br>
-                <input class="button" type="button" value="Create an Account">
+                <input class="button" type="button" value="Create an Account" onclick="location.href = 'accountCreation.html';">
+                <!--Used this post to determine how to have a button have a href property with javascript: https://stackoverflow.com/questions/2906582/how-to-create-an-html-button-that-acts-like-a-link-->
             </fieldset>
         </form>
     </div>
@@ -48,9 +48,3 @@
     <div class="color2"></div>
 </body>
 </html>
-
-
-<!--Questions:
-    1. Why isn't the submit button working?
-    2. How to I get the button element to open up my accountCreation page? Do I just have to use an anchor element instead?
-    -->

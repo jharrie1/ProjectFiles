@@ -30,10 +30,3 @@ function recieved() {
         }
     });
 }
-
-//Questions:
-
-    //1. Is there a way to prevent the form from automatically refershing the page?
-    //2. Why does the submit button for the login page not work, but the method does?
-    //3. Why doesn't this code connect to the backend code?
-    //

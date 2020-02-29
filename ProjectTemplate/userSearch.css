@@ -1,0 +1,81 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+.main {
+    width: 100%;
+    background-color: beige;
+    height: 400px;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 0.5em;
+}
+
+div p {
+    margin-top: 0em;
+    text-decoration: underline;
+}
+
+header {
+    width: 100%;
+    padding-bottom: 1em;
+}
+
+    header a {
+        display: inline-block;
+        padding-top: 1em;
+    }
+
+.right {
+    float: right;
+    margin-left: 2em;
+    margin-right: 1em;
+}
+
+#home {
+    margin-left: 2em;
+}
+
+.color1 {
+    width: 100%;
+    background-color: rgb(253, 230, 196);
+    padding: 3em;
+    margin: 0 auto;
+}
+
+.color2 {
+    width: 100%;
+    background-color: rgb(253, 230, 196);
+    padding: 2em 18em 18em 18em;
+}
+
+#form1 {
+    overflow-y: scroll;
+    max-height: 400px;
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0;
+    margin-top: 1em;
+}
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table {
+    visibility: hidden; /*Make sure this is the right choice later.*/
+    margin: 0 auto;
+}
+
+#searchForm {
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%
+}
+/*WHERE: https://stackoverflow.com/questions/18183296/how-can-i-add-a-vertical-scrollbar-to-my-div-automatically/34172113#34172113 */
