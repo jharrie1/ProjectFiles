@@ -1,3 +1,10 @@
+/*Summary:
+ * recieved() function first gets the values of all cells entered.
+ * Next, it checks to see if the password/confirm password match. If not, the function cancels and a message is sent to the user.
+ * Otherwise, an ajax call is made to RequestAccount that returns a string. 
+ * This string is then displayed to the user on whether their account was submitted or not.
+ * */
+
 function recieved() {
     fname = document.getElementById("firstname").value;
     lname = document.getElementById("lastname").value;

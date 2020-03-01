@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+<!--Head element has links to the css/javascript files as well as the jquery library-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
     <script src="accountCreation.js"></script>
 </head>
 
+<!--Header is stagnant (non-function based) as only a non-signed user has access to this file.-->
 <body>
     <header>
         <a id="home" href="index.html">Home</a>
@@ -19,7 +21,9 @@
     </header>
 
     <div class="color1"></div>
-
+    <!--User enters their information and it is passed to the recieved() function.
+        Did not make this a submit button as the browser wasn't reading it correctly (showed professor).
+        Therefore, you need to click the button and not just press enter when done.-->
     <div class="main">
         <form>
             <fieldset>

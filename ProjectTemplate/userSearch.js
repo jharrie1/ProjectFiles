@@ -1,3 +1,9 @@
+/*Summary
+ * 
+ * Similar logic to userManagement, with difference being that the promote and ban functions either promote a user to an admin position or
+ *  ban a user from the system and blacklist their email.
+ * */
+
 function home() {
 
     var home = document.getElementById("home");

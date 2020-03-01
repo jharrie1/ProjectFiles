@@ -3,7 +3,6 @@
     .fullRow {width: 100%}
 
     td {font-size:1.7em;}
-    /*Invisible class will likely be used later to hide items in the main menu.*/
 }
 
 @media only screen and  (min-width: 1001px) {

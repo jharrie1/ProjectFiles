@@ -1,5 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+<!--Header includes links to css page, jquery library, and two javascript files.-->
+<!--Note: logOff file has a delete account function as well as the logoff function.-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,8 +11,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="About.js"></script>
     <script src="logOff.js"></script>
-    <!--Add logoff function here and in header.-->
 </head>
+
+<!--Summary: 
+    Header will be filled in with additional anchor elements on initial load. 
+    The home anchor will also have it's href changed based on who is logged in/not logged in.
+    The rest are just div elements that contain general information on the project.'
+    -->
 <body onload="home()">
     <header id="headerBar">
         <a id="home" href="index.html">Home</a>

@@ -26,8 +26,7 @@ namespace ProjectTemplate
 			return "SERVER=107.180.1.16; PORT=3306; DATABASE=" + dbName+"; UID=" + dbID + "; PASSWORD=" + dbPass;
 		}
 
-        //LogIn Function (Based on the LogOn Function for accountmanager code file.
-        //Comments will show changes made to get the function working
+        //Signs a user into their account and takes them to the proper home page based on the string return.
         [WebMethod(EnableSession = true)]
         public string LogOn(string username, string password)
         {
@@ -47,12 +46,12 @@ namespace ProjectTemplate
             sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(username));
             sqlCommand.Parameters.AddWithValue("@passValue", HttpUtility.UrlDecode(password));
 
+            //Fill a data table with the return (should be a single row).
             MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
-            
             DataTable sqlDt = new DataTable();
-            
             sqlDa.Fill(sqlDt);
             
+            //Choose what to return based on the approved/status variables returned. Finally return a string to signify this.
             if (sqlDt.Rows.Count > 0)
             {
                 if (Convert.ToInt32(sqlDt.Rows[0]["approved"]) == 0 )
@@ -81,7 +80,7 @@ namespace ProjectTemplate
             return success;
         } 
 
-        //RequestAccount Function (based on RequestAccount function and the GetAccounts() function for data validation)
+        //Verify several conditions and then provide a string message on what the final result is.
         [WebMethod(EnableSession = true)]
         public string RequestAccount(string username, string password, string firstName, string lastName, string email)
         {
@@ -138,7 +137,9 @@ namespace ProjectTemplate
             }
 
 
-
+            //Once above checks are completed, check to see if the email being used is banned.
+            //If so, return a message stating so and break.
+            //However, if not, continue to insert the values into the useres table.
             sqlSelect = "Select email from banned where email=@emailValue";
             sqlCommand = new MySqlCommand(sqlSelect, con);
             sqlCommand.Parameters.AddWithValue("@emailValue", HttpUtility.UrlDecode(email));
@@ -164,10 +165,11 @@ namespace ProjectTemplate
             sqlCommand.Parameters.AddWithValue("@lnameValue", HttpUtility.UrlDecode(lastName));
             sqlCommand.Parameters.AddWithValue("@emailValue", HttpUtility.UrlDecode(email));
 
+            //Open the connection and then submit the new account to await approval.
             con.Open();
             try
             {
-                int accountID = Convert.ToInt32(sqlCommand.ExecuteScalar()); //Check this out later to see if right method.
+                int accountID = Convert.ToInt32(sqlCommand.ExecuteScalar()); 
                 success = "Account submitted for admin approval.";
             }
             catch (Exception e)
@@ -178,23 +180,26 @@ namespace ProjectTemplate
             return success;
         }
 
+        //Get user accounts that have not been approved
+        //Only admins should have the power to approve new users, hence the admin check.
         [WebMethod(EnableSession = true)]
         public User[] GetRequests()
         {
-            //if (Session["id"] != null)
-            //{
+            //Verify that the user is an admin.
+            if (Convert.ToInt32(Session["status"]) == 1)
+            {
+                //create a new data table, string, and connection and then fill
                 DataTable sqlDt = new DataTable("users");
 
                 string sqlSelect = "select id, username, password, firstname, lastname, email from users where approved=0 order by lastname";
-
                 MySqlConnection con = new MySqlConnection(getConString());
                 MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, con);
 
                 
                 MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
-                
                 sqlDa.Fill(sqlDt);
 
+                //Create a user list and add users based on values returned.
                 List<User> users = new List<User>();
                 for (int i = 0; i < sqlDt.Rows.Count; i++)
                 {
@@ -208,24 +213,27 @@ namespace ProjectTemplate
                             email = sqlDt.Rows[i]["email"].ToString()
                         });
                 }
+                //Return the list as an array or an empty array if the user is not an admin.
                 return users.ToArray();
-            //}
-            /*else
+            }
+            else
             {
                 return new User[0];
-            }*/
-        }//Uncomment the admin check later.
+            }
+        }
       
+        //Change the approved column of a user to approve their account.
+        //Since only an admin should do this, there is an admin check.
+        //This function is straight forward, so I'm not going to add extra comments.
         [WebMethod(EnableSession = true)]
-        public void ActivateAccount(string id) //Uncomment the admin check later.
+        public void ActivateAccount(string id)
         {
-            //if (Convert.ToInt32(Session["admin"]) == 1)
-           // {
+            if (Convert.ToInt32(Session["status"]) == 1)
+            {
                 string sqlSelect = "update users set approved=1 where id=@idValue";
 
                 MySqlConnection con = new MySqlConnection(getConString());
                 MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, con);
-
                 sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(id));
 
                 con.Open();
@@ -237,14 +245,17 @@ namespace ProjectTemplate
                 {
                 }
                 con.Close();
-            //}
+            }
         }
 
+        //Same as ActivateAccount(), except we are removing the account instead of changing it.
+        //Using an admin check as only admins should do this.
+        //Also straightforward, so not going to add comments.
         [WebMethod(EnableSession = true)]
-        public void RejectAccount(string id) //Uncomment the admin check later
+        public void RejectAccount(string id)
         {
-           // if (Convert.ToInt32(Session["admin"]) == 1)
-            //{
+            if (Convert.ToInt32(Session["status"]) == 1)
+            {
                 string sqlSelect = "delete from users where id=@idValue";
 
                 MySqlConnection con = new MySqlConnection(getConString());
@@ -261,19 +272,21 @@ namespace ProjectTemplate
                 {
                 }
                 con.Close();
-           // }
+            }
         }
 
+        //Clears the session, nothing else.
         [WebMethod(EnableSession = true)]
         public void LogOff()
         {
             Session.Abandon();
         }
 
+        //Returns a true or false based on if adding a task to the task table was successful.
         [WebMethod(EnableSession = true)]
         public bool CreateTask(string title, string description, string date, string time, string hours, string location)
         {
-
+            //Create our return variable, string, and connection parameters.
             bool success = false;
 
             string sqlSelect = "insert into tasks (managerid, title, description, date, starttime, hours, location) " +
@@ -282,8 +295,6 @@ namespace ProjectTemplate
             //Use the getConString() function instead of prior code.
             MySqlConnection con = new MySqlConnection(getConString());
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, con);
-
-
             //names edited to match variable names listed prior.
             sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(Session["id"].ToString())); //Make sure this works later. 
             sqlCommand.Parameters.AddWithValue("@titleValue", HttpUtility.UrlDecode(title));
@@ -293,7 +304,7 @@ namespace ProjectTemplate
             sqlCommand.Parameters.AddWithValue("@hoursValue", HttpUtility.UrlDecode(hours));
             sqlCommand.Parameters.AddWithValue("@locationValue", HttpUtility.UrlDecode(location));
 
-
+            //Create the connection and try to add the new account to the tasks table.
             con.Open();
  
             try
@@ -308,14 +319,14 @@ namespace ProjectTemplate
             return success;
         }
 
+        //Returns related tasks to values entered in a search bar.
         [WebMethod(EnableSession = true)]
         public Task[] GetTasks(string search)
         {
-            //if (Session["id"] != null)
-            //{
-
+            //Need to concatenate first % signs to the passed argument.
             string test = '%' + search + '%';
 
+            //Then able to use the like keyword and create a list of tasks with their id and title to be passed back.
             DataTable sqlDt = new DataTable("tasks");
 
             string sqlSelect = "select id, title from tasks where title like @testValue or description like @testValue " +
@@ -338,22 +349,17 @@ namespace ProjectTemplate
                 {
                     id = Convert.ToInt32(sqlDt.Rows[i]["id"]),
                     title = sqlDt.Rows[i]["title"].ToString()
-                    //Can come back and add more returns later if need to display information.
                 });
             }
             return tasks.ToArray();
-            //}
-            /*else
-            {
-                return new User[0];
-            }*/
-        }//Uncomment the admin check later.
+        }
 
+        //Allows a user to register for a task so long as they are not the ones that created it. 
+        //String is returned to show whether the registration was successful.
         [WebMethod(EnableSession = true)]
-        public string RegisterTask(string id) //Uncomment the admin check later.
+        public string RegisterTask(string id)
         {
-            //if (Convert.ToInt32(Session["admin"]) == 1)
-            // {
+            //First, access database to make sure that the person registering is not the person that created the task.
             var success = "";
             string sqlSelect = "Select managerid from tasks where id=@idValue";
             MySqlConnection con = new MySqlConnection(getConString());
@@ -364,6 +370,7 @@ namespace ProjectTemplate
             MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
             sqlDa.Fill(sqlDt);
 
+            //After confirmation, move on and update the task table to set the value of the volunteerid.
             if (Convert.ToInt32(sqlDt.Rows[0]["managerid"]) == Convert.ToInt32(Session["id"]))
             {
                 success = "Cannot register for a task that you created.";
@@ -390,50 +397,52 @@ namespace ProjectTemplate
             }
             con.Close();
             return success;
-            //}
         }
 
+        //Returns a user array for a searched user. 
+        //For now only admins can do this, due to the permissions associated with the user. 
         [WebMethod(EnableSession = true)]
         public User[] GetUsers(string search)
         {
-            //if (Session["id"] != null)
-            //{
-
-            string test = '%' + search + '%';
-
-            DataTable sqlDt = new DataTable("users");
-
-            string sqlSelect = "select id, username from users where approved=1 and (username like @testValue or firstname like @testValue " +
-                "or lastname like @testValue or email like @testValue)";
-
-            MySqlConnection con = new MySqlConnection(getConString());
-            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, con);
-
-            sqlCommand.Parameters.AddWithValue("@testValue", HttpUtility.UrlDecode(test));
-
-
-            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
-
-            sqlDa.Fill(sqlDt);
-
-            List<User> users = new List<User>();
-            for (int i = 0; i < sqlDt.Rows.Count; i++)
+            if (Convert.ToInt32(Session["status"]) == 1)
             {
-                users.Add(new User
+                //Conceatentate the parameter, pass to use the like keyword, and create a user list if an admin or pass a blank list if not an admin.
+                string test = '%' + search + '%';
+
+                DataTable sqlDt = new DataTable("users");
+
+                 string sqlSelect = "select id, username from users where approved=1 and (username like @testValue or firstname like @testValue " +
+                    "or lastname like @testValue or email like @testValue)";
+
+                MySqlConnection con = new MySqlConnection(getConString());
+                MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, con);
+
+                sqlCommand.Parameters.AddWithValue("@testValue", HttpUtility.UrlDecode(test));
+
+
+                MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+
+                sqlDa.Fill(sqlDt);
+
+                List<User> users = new List<User>();
+                for (int i = 0; i < sqlDt.Rows.Count; i++)
                 {
-                    id = Convert.ToInt32(sqlDt.Rows[i]["id"]),
-                    username = sqlDt.Rows[i]["username"].ToString()
-                    //Can come back and add more returns later if need to display information.
-                });
+                    users.Add(new User
+                    {
+                        id = Convert.ToInt32(sqlDt.Rows[i]["id"]),
+                        username = sqlDt.Rows[i]["username"].ToString()
+                    });
+                }
+                return users.ToArray();
             }
-            return users.ToArray();
-            //}
-            /*else
+            else
             {
                 return new User[0];
-            }*/
-        }//Uncomment the admin check later.
+            }
+        }
 
+        //Check to see if a current user is an admin to customize their header. 
+        //0 is not signed in, 1 is a general user, 2 is an admin.
         [WebMethod(EnableSession = true)]
         public int AdminCheck()
         {
@@ -454,50 +463,53 @@ namespace ProjectTemplate
             }
         }
 
+        //Get information to display when a user label is clicked.
+        //Since only admins can currently access user information, this will have an admin check for now.
         [WebMethod(EnableSession = true)]
-        public User[] GetUserInfo(string id) //Uncomment the admin check later.
+        public User[] GetUserInfo(string id)
         {
-            //if (Session["id"] != null)
-            //{
-            DataTable sqlDt = new DataTable("users");
-
-            string sqlSelect = "select id, username, firstname, lastname, email from users where id= @testValue";
-
-            MySqlConnection con = new MySqlConnection(getConString());
-            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, con);
-
-            sqlCommand.Parameters.AddWithValue("@testValue", HttpUtility.UrlDecode(id));
-
-
-            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
-
-            sqlDa.Fill(sqlDt);
-
-            List<User> user = new List<User>();
-            for (int i = 0; i < sqlDt.Rows.Count; i++)
+            //Just selecting the user information for the label we click on, nothing else. 
+            if (Convert.ToInt32(Session["status"]) == 1)
             {
-                user.Add(new User
+                DataTable sqlDt = new DataTable("users");
+
+                string sqlSelect = "select id, username, firstname, lastname, email from users where id= @testValue";
+
+                MySqlConnection con = new MySqlConnection(getConString());
+                MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, con);
+
+                sqlCommand.Parameters.AddWithValue("@testValue", HttpUtility.UrlDecode(id));
+
+
+                MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+
+                sqlDa.Fill(sqlDt);
+
+                List<User> user = new List<User>();
+                for (int i = 0; i < sqlDt.Rows.Count; i++)
                 {
-                    id = Convert.ToInt32(sqlDt.Rows[i]["id"]),
-                    username = sqlDt.Rows[i]["username"].ToString(),
-                    firstName = sqlDt.Rows[i]["firstname"].ToString(),
-                    lastName = sqlDt.Rows[i]["lastname"].ToString(),
-                    email = sqlDt.Rows[i]["email"].ToString()
-                });
+                    user.Add(new User
+                    {
+                        id = Convert.ToInt32(sqlDt.Rows[i]["id"]),
+                        username = sqlDt.Rows[i]["username"].ToString(),
+                        firstName = sqlDt.Rows[i]["firstname"].ToString(),
+                        lastName = sqlDt.Rows[i]["lastname"].ToString(),
+                        email = sqlDt.Rows[i]["email"].ToString()
+                    });
+                }
+                return user.ToArray();
             }
-            return user.ToArray();
-            //}
-            /*else
+            else
             {
                 return new User[0];
-            }*/
+            }
         }
 
+        //Same as the function above, as display task information when a label is clicked.
+        //No other explanation is necessary.
         [WebMethod(EnableSession = true)]
-        public Task[] GetTaskInfo(string id) //Uncomment the admin check later.
+        public Task[] GetTaskInfo(string id)
         {
-            //if (Session["id"] != null)
-            //{
             DataTable sqlDt = new DataTable("users");
 
             string sqlSelect = "select id, title, description, date, starttime, hours, location from tasks where id= @testValue";
@@ -527,18 +539,13 @@ namespace ProjectTemplate
                 });
             }
             return task.ToArray();
-            //}
-            /*else
-            {
-                return new User[0];
-            }*/
         }
 
+        //Get tasks that a user is currently registered for. 
         [WebMethod(EnableSession = true)]
         public Task[] GetCurrentTasks()
         {
-            //if (Session["id"] != null)
-            //{
+            //Similar to codes above,but this time we are checking in the volunteerid column.
             DataTable sqlDt = new DataTable("tasks");
 
             string sqlSelect = "select id, title from tasks where volunteerid=@idValue";
@@ -561,18 +568,13 @@ namespace ProjectTemplate
                 });
             }
             return tasks.ToArray();
-            //}
-            /*else
-            {
-                return new User[0];
-            }*/
-        }//Uncomment the admin check later.
+        }
 
+        //Unregister for a task that a user was priorly registered for.
         [WebMethod(EnableSession = true)]
-        public void DeregisterTask(string id) //Uncomment the admin check later.
+        public void DeregisterTask(string id)
         {
-            //if (Convert.ToInt32(Session["admin"]) == 1)
-            // {
+            //Setting the volunteerid column to null to let the task be unclaimed.
             string sqlSelect = "update tasks set volunteerid=null where id=@idValue";
 
             MySqlConnection con = new MySqlConnection(getConString());
@@ -589,99 +591,113 @@ namespace ProjectTemplate
             {
             }
             con.Close();
-            //}
         }
 
+        //Allows an admin to promote a user to an admin. 
+        //Checks also to make sure that the user is not already promoted.
+        //Since it is a web service involving users, it will have an admin check for now.
         [WebMethod(EnableSession = true)]
-        public string Promote(string id) //Uncomment the admin check later.
+        public string Promote(string id) 
         {
-            //if (Convert.ToInt32(Session["admin"]) == 1)
-            // {
-            string sqlSelect = "Select status from users where id=@idValue";
+            if (Convert.ToInt32(Session["status"]) == 1)
+             {
+                string sqlSelect = "Select status from users where id=@idValue";
 
-            MySqlConnection con = new MySqlConnection(getConString());
-            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, con);
-            sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(id));
+                MySqlConnection con = new MySqlConnection(getConString());
+                MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, con);
+                sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(id));
 
-            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
-            DataTable sqlDt = new DataTable();
-            sqlDa.Fill(sqlDt);
+                MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+                DataTable sqlDt = new DataTable();
+                sqlDa.Fill(sqlDt);
 
-            if (Convert.ToInt32(sqlDt.Rows[0]["status"]) == 1)
-            {
-                return "User is already an admin. No changes made.";
+                if (Convert.ToInt32(sqlDt.Rows[0]["status"]) == 1)
+                {
+                    return "User is already an admin. No changes made.";
+                }
+
+
+                sqlSelect = "update users set status=1 where id=@idValue";
+                sqlCommand = new MySqlCommand(sqlSelect, con);
+                sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(id));
+
+                con.Open();
+                try
+                {
+                    sqlCommand.ExecuteNonQuery();
+                    con.Close();
+                    return "User promoted to admin.";
+                }
+                catch (Exception e)
+                {
+                    con.Close();
+                    return "Error, change could not be made.";
+                }
             }
-
-
-            sqlSelect = "update users set status=1 where id=@idValue";
-            sqlCommand = new MySqlCommand(sqlSelect, con);
-            sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(id));
-
-            con.Open();
-            try
+            else
             {
-                sqlCommand.ExecuteNonQuery();
-                con.Close();
-                return "User promoted to admin.";
+                return "Error, user is not an admin";
             }
-            catch (Exception e)
-            {
-                con.Close();
-                return "Error, change could not be made.";
-            }
-            //}
         }
 
+        //An admin can ban a user account, move their email to the banned table, and delete them from useres.
+        //They cannot do this to other admins.
+        //Since it deals with user accounts, it will have an admin check.
         [WebMethod(EnableSession = true)]
-        public string Ban(string id) //Uncomment the admin check later.
+        public string Ban(string id)
         {
-            //if (Convert.ToInt32(Session["admin"]) == 1)
-            // {
-            string sqlSelect = "Select email, status from users where id=@idValue";
+            //Do an initial check to see if the user is an admin, if not the ban can continue.
+            if (Convert.ToInt32(Session["status"]) == 1)
+             {
+                string sqlSelect = "Select email, status from users where id=@idValue";
 
-            MySqlConnection con = new MySqlConnection(getConString());
-            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, con);
-            sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(id));
+                MySqlConnection con = new MySqlConnection(getConString());
+                MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, con);
+                sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(id));
 
-            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
-            DataTable sqlDt = new DataTable();
-            sqlDa.Fill(sqlDt);
+                MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+                DataTable sqlDt = new DataTable();
+                sqlDa.Fill(sqlDt);
 
-            var email = sqlDt.Rows[0]["email"];
+                var email = sqlDt.Rows[0]["email"];
 
-            if (Convert.ToInt32(sqlDt.Rows[0]["status"]) == 1)
-            {
-                return "An admin cannot ban another admin.";
+                if (Convert.ToInt32(sqlDt.Rows[0]["status"]) == 1)
+                {
+                    return "An admin cannot ban another admin.";
+                }
+
+
+                //Move email to one table and remove the user from our user table.
+                sqlSelect = "insert into banned (adminid, email) values (@idValue, @emailValue); delete from users where email=@emailValue;";
+                //Deletions automatically cascade to the tasks table, so don't need to explicitly call a delete for this table.
+                sqlCommand = new MySqlCommand(sqlSelect, con);
+                sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(Session["id"].ToString()));
+                sqlCommand.Parameters.AddWithValue("@emailValue", HttpUtility.UrlDecode(email.ToString()));
+
+                con.Open();
+                try
+                {
+                    sqlCommand.ExecuteNonQuery();
+                    con.Close();
+                    return "User has been banned.";
+                }
+                catch (Exception e)
+                {
+                    con.Close();
+                    return "Error, change could not be made.";
+                }
             }
-
-
-
-            sqlSelect = "insert into banned (adminid, email) values (@idValue, @emailValue); delete from users where email=@emailValue;";
-            //Deletions automatically cascade to the tasks table, so don't need to explicitly call a delete for this table.
-            sqlCommand = new MySqlCommand(sqlSelect, con);
-            sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(Session["id"].ToString()));
-            sqlCommand.Parameters.AddWithValue("@emailValue", HttpUtility.UrlDecode(email.ToString()));
-
-            con.Open();
-            try
+            else
             {
-                sqlCommand.ExecuteNonQuery();
-                con.Close();
-                return "User has been banned.";
+                return ("Error, user is not an admin.");
             }
-            catch (Exception e)
-            {
-                con.Close();
-                return "Error, change could not be made.";
-            }
-            //}
         }
 
+        //Web service that allows a user to delete their own account.
         [WebMethod(EnableSession = true)]
-        public void DeleteAccount() //Uncomment the admin check later.
+        public void DeleteAccount() 
         {
-            //if (Convert.ToInt32(Session["admin"]) == 1)
-            // {
+            //Just remove their information from the user table in the database.
             string sqlSelect = "delete from users where id=@idValue";
 
             MySqlConnection con = new MySqlConnection(getConString());
@@ -697,7 +713,7 @@ namespace ProjectTemplate
             {
             }
             con.Close();
-            //}
+
         }
     }
 

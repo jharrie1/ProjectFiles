@@ -1,3 +1,8 @@
+/*Summary
+ * 
+ * Same as the other home functions, it changes the header based on who is signed in.
+ * 
+ * */
 function home() {
 
     var home = document.getElementById("home");
@@ -117,6 +122,11 @@ function home() {
     });
 }
 
+/*Summary
+ * 
+ * Get user input, make sure the date/time hasn't passed or that values are too long, and then pass and display the result as a string value.
+ * 
+ * */
 function recieved() {
     tasktitle = document.getElementById("tasktitle").value;
     description = document.getElementById("description").value;

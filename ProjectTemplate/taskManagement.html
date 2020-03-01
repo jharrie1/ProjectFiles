@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+<!--Links are to the css/js files, jquery library, and the logoff file.-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,20 +12,20 @@
     <script src="logOff.js"></script>
 </head>
 
+<!--Changing header based on who is signed in-->
 <body onload="home()">
     <header id="headerBar">
         <a id="home" href="adminIndex.html">Home</a>
     </header>
 
     <div class="color1"></div>
-
+    <!--Elements will be added to the form when tasks are automatically displayed to the user.-->
     <div class="main">
         <p>Currently Registered Tasks</p>
         <button id="refreshButton" onclick="recieved()" type="button">Refresh</button>
         <form id="form1"></form>
     </div>
 
-    <!--Change this later when putting in the task display function.-->
     <div class="color2">
         <table id="table">
             <tr>

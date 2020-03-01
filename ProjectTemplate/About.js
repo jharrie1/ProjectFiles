@@ -1,3 +1,10 @@
+/*Summary: 
+ * The home function involves only the header element.
+ * First, the AdminCheck ajax function is used to tell if a user is signed in, and if so, if they are a normal user or an admin.
+ * 0 represents a non-signed in user, 1 represents a normal user, and 2 represents an admin.
+ * Then, depending on the response, the home button href is changed and additional anchor elements are added to the page specific to the user's access.
+ * */
+
 function home() {
 
     var home = document.getElementById("home");

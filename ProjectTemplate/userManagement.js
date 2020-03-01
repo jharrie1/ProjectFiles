@@ -1,3 +1,9 @@
+/*Summary
+ * 
+ * Acts similar to the taskManagement file, except the accept and deny functions are for approving or denying new users into the database system.
+ * The elements passed are once again buttons that link to a fieldset with an id for a name property.
+ * */
+
 function accept(element) {
 
     var div = element.parentElement;
@@ -155,16 +161,12 @@ function recieved() {
     });
 };
 
-//Want a label element clicked, whereby the label will be passed to the function
-//This will allow us to find the parent element and get the id from it's name
-//We can send this informatoin to the server, which will return to us a user object with our necessary information.
-//Take this information, create a new row in our table, and store the values in the table. 
 function display(element) {
     var div = element.parentElement;
     var fieldset = div.parentElement;
     var id = fieldset.name;
 
-    var webMethod = "ProjectServices.asmx/GetUserInfo"; //Change function name later. 
+    var webMethod = "ProjectServices.asmx/GetUserInfo"; 
     var parameters = "{\"id\":\"" + encodeURI(id) + "\"}";
 
     $.ajax({
@@ -174,7 +176,7 @@ function display(element) {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
-            //May need to update recieve function to set table visibility to hidden.
+            
             var userArray = msg.d;
             var table = document.getElementById("table");
             var idrow = document.getElementById("idrow");

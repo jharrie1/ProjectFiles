@@ -1,32 +1,8 @@
-function home() {
-
-    var home = document.getElementById("home");
-
-    var webMethod = "ProjectServices.asmx/AdminCheck";
-
-    $.ajax({
-        type: "POST",
-        url: webMethod,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            var status = msg.d;
-            if (status == 1) {
-                home.href = "userIndex.html";
-            }
-            else if (status == 2) {
-                home.href = "adminIndex.html";
-            }
-            else {
-                home.href = "index.html";
-            }
-        },
-        error: function (e) {
-            alert("this code will only execute if javascript is unable to access the webservice");
-        }
-    });
-}
-
+/*Summary
+ * Get the username and password and pass it to the LogOn web service.
+ * Based on the response, the user is taken to a new index page, told that their credentials are incorrect, or tells them that their account is not 
+ *  admin approved.
+ * */
 function recieved() {
     username = document.getElementById("username").value;
     password = document.getElementById("password").value;

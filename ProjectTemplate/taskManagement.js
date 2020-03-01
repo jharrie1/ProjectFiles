@@ -1,3 +1,7 @@
+/*Summary
+ * 
+ * Access the DeregisterTask web service and are able to get the id argument from the fieldset name (which is set to the task id).
+ * */
 function deregister(element) { //Change to deregister and add a function.
 
     var div = element.parentElement;
@@ -26,6 +30,10 @@ function deregister(element) { //Change to deregister and add a function.
 
 }
 
+/*Summary
+ * 
+ * Get a Task array, loop through first to clear prior entries, and then add new fieldsets/other elements to relect all relevant tasks to user.
+ * */
 function recieved() {
 
     var webMethod = "ProjectServices.asmx/GetCurrentTasks";
@@ -85,6 +93,11 @@ function recieved() {
     });
 };
 
+/*Summary
+ * 
+ * Clicking on the label element will let a table appear at the bottom of the page that diplays information on the task.
+ * This is once again determined thanks to the fieldset name property.
+ * */
 function display(element) {
     var div = element.parentElement;
     var fieldset = div.parentElement;
@@ -122,6 +135,7 @@ function display(element) {
 
             var newDate = new Date(taskArray[0]['date']);
             daterow.innerHTML = newDate.getMonth() + 1 + "-" + newDate.getDate() + "-" + newDate.getFullYear();
+            //Reference to where I learned about dates can be found in taskManagement.js file
 
 
         },
@@ -131,6 +145,10 @@ function display(element) {
     });
 }
 
+/*Summary
+ * 
+ * Same as prior code, determines the header of the page based on the user status.
+ * */
 function home() {
 
     var home = document.getElementById("home");

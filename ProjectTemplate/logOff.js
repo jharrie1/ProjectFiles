@@ -1,3 +1,6 @@
+/*Summary
+ * Goes to the logoff function, gets rid of the current session variables, then takes the user back to the non-signed in home page.
+ * */
 function logoff() {
 
     var webMethod = "ProjectServices.asmx/LogOff";
@@ -15,7 +18,11 @@ function logoff() {
         }
     });
 }
-
+/*Summary
+ * Gives a user the choice on whether they still want to delete their account.
+ * If approved, then call the DeleteAccount method to remove them from the database.
+ * Finally, call the logoff function to send them back to the non-user home page.
+ * */
 function deleteAccount() {
 
     var input = confirm("Are you sure you want to delete your account?");

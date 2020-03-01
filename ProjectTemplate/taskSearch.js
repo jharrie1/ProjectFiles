@@ -1,3 +1,10 @@
+
+/*Summary
+ * 
+ * These function sare the same as the taskManagement.js file.
+ * Only differences are the register which registers a user for a task (opposite of deregister) and clear, which clears away elements on the table. 
+ * */
+
 function home() {
 
     var home = document.getElementById("home");
@@ -116,7 +123,6 @@ function home() {
         }
     });
 }
-
 
 function register(element) {
 
@@ -271,7 +277,8 @@ function display(element) {
             locationrow.innerHTML = taskArray[0]['location'];
 
             var newDate = new Date(taskArray[0]['date']);
-            daterow.innerHTML = newDate.getMonth()+1 + "-" + newDate.getDate() + "-" + newDate.getFullYear();
+            daterow.innerHTML = newDate.getMonth() + 1 + "-" + newDate.getDate() + "-" + newDate.getFullYear();
+            //Reference to where I learned date objects in JS in the taskCreation file.
              
 
         },
